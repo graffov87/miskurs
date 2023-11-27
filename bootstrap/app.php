@@ -40,7 +40,12 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+//$app->register(\Nuwave\Lighthouse\LighthouseServiceProvider::class);
 
+//$app->register(\Nuwave\Lighthouse\LighthouseServiceProvider::class);
+//$app->register(\Nuwave\Lighthouse\Pagination\PaginationServiceProvider::class);
+//$app->register(\Nuwave\Lighthouse\Validation\ValidationServiceProvider::class);
+//$app->configure('lighthouse');
 /*
 |--------------------------------------------------------------------------
 | Return The Application

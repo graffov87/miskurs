@@ -29,6 +29,7 @@
                         <h1 class="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
                         <recent-post></recent-post>
                     </div>
+                    <button @click="getData">Click</button>
                 </div>
             </div>
         </div>
@@ -107,7 +108,33 @@
                         image: "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80",
                         userName: "Khatab Wedaa"
                     },
-                ]
+                ],
+                async getData() {
+                    const endpoint = "http://127.0.0.1:8000/graphql";
+const headers = {
+	"content-type": "application/json",
+  //  "Authorization": "<token>"
+};
+const graphqlQuery = {
+    "query": `{user(id:1) {
+    name
+    email
+  }}`
+};
+
+const options = {
+    "method": "POST",
+    "headers": headers,
+    "body": JSON.stringify(graphqlQuery)
+};
+
+const response = await fetch(endpoint, options);
+const data = await response.json();
+
+console.log(data.data); // data
+console.log(data.errors); //
+
+                }
             }
         }
     }

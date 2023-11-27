@@ -169,6 +169,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\Filament\AdminPanelProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+        Nuwave\Lighthouse\LighthouseServiceProvider::class,
+        Nuwave\Lighthouse\Pagination\PaginationServiceProvider::class,
+        Nuwave\Lighthouse\Validation\ValidationServiceProvider::class
     ])->toArray(),
 
     /*
