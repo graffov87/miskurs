@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PermissionResource\Pages;
-use App\Filament\Resources\PermissionResource\RelationManagers;
-use App\Models\Permission;
+use App\Filament\Resources\PostResource\Pages;
+use App\Filament\Resources\PostResource\RelationManagers;
+use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,36 +14,33 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 
-class PermissionResource extends Resource
+class PostResource extends Resource
 {
-    protected static ?string $model = Permission::class;
+    protected static ?string $model = Post::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-key';
-
-    protected static ?int $navigationSort = 3;
-
-    protected static ?string $navigationGroup = 'Settings';
+    protected static ?string $navigationIcon = 'heroicon-o-bars-3';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make()->schema([
-                Forms\Components\TextInput::make('name')->required()
-                ->minLength(2)
-                ->maxLength(255)
-                ->unique(ignoreRecord: true)
-            ])]
-                );
+                    Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                    Forms\Components\TextArea::make('content')
+                    ->rows(10)
+                    ->cols(20)
+                    ->required()
+                    ])->columns(2)
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime('d-M-Y')->sortable(),
+                Tables\Columns\TextColumn::make('title')->searchable()
             ])
             ->filters([
                 //
@@ -69,9 +66,9 @@ class PermissionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPermissions::route('/'),
-            'create' => Pages\CreatePermission::route('/create'),
-            'edit' => Pages\EditPermission::route('/{record}/edit'),
+            'index' => Pages\ListPosts::route('/'),
+            'create' => Pages\CreatePost::route('/create'),
+            'edit' => Pages\EditPost::route('/{record}/edit'),
         ];
     }
 }

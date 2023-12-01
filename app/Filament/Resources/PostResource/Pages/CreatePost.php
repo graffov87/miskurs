@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\PermissionResource\Pages;
+namespace App\Filament\Resources\PostResource\Pages;
 
-use App\Filament\Resources\PermissionResource;
+use App\Filament\Resources\PostResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreatePermission extends CreateRecord
+class CreatePost extends CreateRecord
 {
-    protected static string $resource = PermissionResource::class;
+    protected static string $resource = PostResource::class;
 
     protected function getRedirectUrl(): string
     {
@@ -17,6 +17,6 @@ class CreatePermission extends CreateRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Permission created';
+        return 'Post created';
     }
 }
