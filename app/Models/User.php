@@ -56,4 +56,10 @@ class User extends Authenticatable
 
     return in_array($role,$listPermissions);
    }
+
+   public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
+
 }

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\MenuResource\Pages;
+namespace App\Filament\Resources\CategoryResource\Pages;
 
-use App\Filament\Resources\MenuResource;
+use App\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateMenu extends CreateRecord
+class CreateCategory extends CreateRecord
 {
-    protected static string $resource = MenuResource::class;
-
+    protected static string $resource = CategoryResource::class;
 
     protected function getRedirectUrl(): string
     {
@@ -18,6 +17,6 @@ class CreateMenu extends CreateRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Menu Item created';
+        return 'Category created';
     }
 }

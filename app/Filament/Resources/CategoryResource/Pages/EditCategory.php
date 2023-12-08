@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\MenuResource\Pages;
+namespace App\Filament\Resources\CategoryResource\Pages;
 
-use App\Filament\Resources\MenuResource;
+use App\Filament\Resources\CategoryResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditMenu extends EditRecord
+class EditCategory extends EditRecord
 {
-    protected static string $resource = MenuResource::class;
+    protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -24,6 +24,6 @@ class EditMenu extends EditRecord
 
     protected function getCreatedNotificationTitle(): ?string
     {
-        return 'Menu Item updated';
+        return 'Category updated';
     }
 }

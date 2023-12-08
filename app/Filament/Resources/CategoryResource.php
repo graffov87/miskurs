@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
-use App\Models\Post;
+use App\Filament\Resources\CategoryResource\Pages;
+use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,16 +13,14 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
-use Filament\Forms\Components\RichEditor;
-use Filament\Forms\Components\Select;
 
-class PostResource extends Resource
+class CategoryResource extends Resource
 {
-    protected static ?string $model = Post::class;
+    protected static ?string $model = Category::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bars-3';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationGroup = 'Blog';
 
@@ -31,15 +29,10 @@ class PostResource extends Resource
         return $form
             ->schema([
                 Section::make()->schema([
-                    Forms\Components\TextInput::make('title')
+                    Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
-                    RichEditor::make('content'),
-                    Select::make('categories')
-                    ->multiple()
-                    ->relationship('categories','name')
-                    ->preload()
-                    ])->columns(1)
+                    ->maxLength(255)
+                    ])->columns(2)
             ]);
     }
 
@@ -47,7 +40,9 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')->searchable()
+                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('created_at')->dateTime('d-M-Y')->sortable(),
             ])
             ->filters([
                 //
@@ -73,9 +68,9 @@ class PostResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => Pages\ListCategories::route('/'),
+            'create' => Pages\CreateCategory::route('/create'),
+            'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }
 }

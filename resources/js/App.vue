@@ -18,8 +18,8 @@
                 </div>
                 <div class="-mx-8 w-4/12 hidden lg:block">
                     <div class="px-8">
-                        <h1 class="mb-4 text-xl font-bold text-gray-700">Authors</h1>
-                        <users-list></users-list>
+                        <h1 class="mb-4 text-xl font-bold text-gray-700">Календрь дня</h1>
+                        <calend></calend>
                     </div>
                     <div class="mt-10 px-8">
                         <h1 class="mb-4 text-xl font-bold text-gray-700">Categories</h1>
@@ -29,133 +29,134 @@
                         <h1 class="mb-4 text-xl font-bold text-gray-700">Recent Post</h1>
                         <recent-post></recent-post>
                     </div>
-                    <button @click="getData">Click</button>
                 </div>
             </div>
         </div>
-        
+
         <simple-footer></simple-footer>
     </div>
 </template>
 
 <script>
-    import Navbar from "./components/navigation-navbar-simple.vue";
-    import PostFilter from "./components/elements-select-option.vue";
-    import Post from "./components/elements-blog-post-article-review.vue";
-    import Pagination from "./components/elements-pagination.vue";
-    import UsersList from "./components/sections-blog-users-list.vue";
-    import Categories from "./components/sections-categories-list.vue";
-    import RecentPost from "./components/sections-recent-article.vue";
-    import SimpleFooter from "./components/navigation-footer-simple-with-icon.vue";
+import Navbar from "./components/navigation-navbar-simple.vue";
+import PostFilter from "./components/elements-select-option.vue";
+import Post from "./components/elements-blog-post-article-review.vue";
+import Pagination from "./components/elements-pagination.vue";
+import UsersList from "./components/sections-blog-users-list.vue";
+import Categories from "./components/sections-categories-list.vue";
+import RecentPost from "./components/sections-recent-article.vue";
+import SimpleFooter from "./components/navigation-footer-simple-with-icon.vue";
+import Calend from "./components/section-calendar.vue";
 
-    export default {
-        name: 'app',
-        components: {
-            Navbar,
-            PostFilter,
-            Post,
-            Pagination,
-            UsersList,
-            Categories,
-            RecentPost,
-            SimpleFooter
-        },
-        data() {
-            return {
-                posts: [
-                    {
-                        id: 1,
-                        date: "Jun 1, 2020",
-                        tag: "Laravel",
-                        title: "Build Your New Idea with Laravel Freamwork.",
-                        body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
-                        image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80",
-                        userName: "Alex John"
-                    },
-                    {
-                        id: 2,
-                        date: "mar 4, 2019",
-                        tag: "Design",
-                        title: "Accessibility tools for designers and developers",
-                        body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
-                        image: "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=333&q=80",
-                        userName: "Jane Doe"
-                    },
-                    {
-                        id: 3,
-                        date: "Feb 14, 2019",
-                        tag: "PHP",
-                        title: "PHP: Array to Map",
-                        body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
-                        image: "https://images.unsplash.com/photo-1531251445707-1f000e1e87d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=281&q=80",
-                        userName: "Lisa Way"
-                    },
-                    {
-                        id: 4,
-                        date: "Dec 23, 2018",
-                        tag: "Django",
-                        title: "Django Dashboard - Learn by Coding",
-                        body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
-                        image: "https://images.unsplash.com/photo-1500757810556-5d600d9b737d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=735&q=80",
-                        userName: "Steve Matt"
-                    },
-                    {
-                        id: 5,
-                        date: "Mar 10, 2018",
-                        tag: "Testing",
-                        title: "TDD Frist",
-                        body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
-                        image: "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80",
-                        userName: "Khatab Wedaa"
-                    },
-                ],
-                async getData() {
-                    const endpoint = "http://127.0.0.1:8000/graphql";
-const headers = {
-	"content-type": "application/json",
-  //  "Authorization": "<token>"
-};
-const graphqlQuery = {
-    "query": `{user(id:1) {
+export default {
+    name: 'app',
+    components: {
+        Navbar,
+        PostFilter,
+        Post,
+        Pagination,
+        UsersList,
+        Categories,
+        RecentPost,
+        SimpleFooter,
+        Calend
+    },
+    data() {
+        return {
+            posts: [
+                {
+                    id: 1,
+                    date: "Jun 1, 2020",
+                    tag: "Laravel",
+                    title: "Build Your New Idea with Laravel Freamwork.",
+                    body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
+                    image: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=731&q=80",
+                    userName: "Alex John"
+                },
+                {
+                    id: 2,
+                    date: "mar 4, 2019",
+                    tag: "Design",
+                    title: "Accessibility tools for designers and developers",
+                    body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
+                    image: "https://images.unsplash.com/photo-1464863979621-258859e62245?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=333&q=80",
+                    userName: "Jane Doe"
+                },
+                {
+                    id: 3,
+                    date: "Feb 14, 2019",
+                    tag: "PHP",
+                    title: "PHP: Array to Map",
+                    body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
+                    image: "https://images.unsplash.com/photo-1531251445707-1f000e1e87d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=281&q=80",
+                    userName: "Lisa Way"
+                },
+                {
+                    id: 4,
+                    date: "Dec 23, 2018",
+                    tag: "Django",
+                    title: "Django Dashboard - Learn by Coding",
+                    body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
+                    image: "https://images.unsplash.com/photo-1500757810556-5d600d9b737d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=735&q=80",
+                    userName: "Steve Matt"
+                },
+                {
+                    id: 5,
+                    date: "Mar 10, 2018",
+                    tag: "Testing",
+                    title: "TDD Frist",
+                    body: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora expedita dicta totam aspernatur doloremque. Excepturi iste iusto eos enim reprehenderit nisi, accusamus delectus nihil quis facere in modi ratione libero!",
+                    image: "https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80",
+                    userName: "Khatab Wedaa"
+                },
+            ],
+            async getData() {
+                const endpoint = "http://127.0.0.1:8000/graphql";
+                const headers = {
+                    "content-type": "application/json",
+                    //  "Authorization": "<token>"
+                };
+                const graphqlQuery = {
+                    "query": `{user(id:1) {
     name
     email
   }}`
-};
+                };
 
-const options = {
-    "method": "POST",
-    "headers": headers,
-    "body": JSON.stringify(graphqlQuery)
-};
+                const options = {
+                    "method": "POST",
+                    "headers": headers,
+                    "body": JSON.stringify(graphqlQuery)
+                };
 
-const response = await fetch(endpoint, options);
-const data = await response.json();
+                const response = await fetch(endpoint, options);
+                const data = await response.json();
 
-console.log(data.data); // data
-console.log(data.errors); //
+                console.log(data.data); // data
+                console.log(data.errors); //
 
-                }
             }
         }
     }
+}
 </script>
 
 <style>
-    @import "../css/app.css";
+@import "../css/app.css";
 
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
+::-webkit-scrollbar {
+    width: 5px;
+}
 
-    ::-webkit-scrollbar-track {
-        background: #2D3748;
-    }
+::-webkit-scrollbar-track {
+    background: #2D3748;
+}
 
-    ::-webkit-scrollbar-thumb {
-        background: #CBD5E0;
-    }
+::-webkit-scrollbar-thumb {
+    background: #CBD5E0;
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: #2D3748;
-    }
+::-webkit-scrollbar-thumb:hover {
+    background: #2D3748;
+}
 </style>

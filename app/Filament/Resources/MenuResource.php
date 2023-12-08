@@ -21,6 +21,8 @@ class MenuResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    protected static ?string $navigationGroup = 'Settings';
+
 
     public static function form(Form $form): Form
     {
@@ -28,6 +30,7 @@ class MenuResource extends Resource
         ->schema([
             Forms\Components\TextInput::make('name')->required(),
             Forms\Components\TextInput::make('path')->required(),
+            Forms\Components\TextInput::make('sort')
         ]);
     }
 
@@ -43,10 +46,11 @@ class MenuResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
