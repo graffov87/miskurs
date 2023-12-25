@@ -50,6 +50,12 @@ class EditProfile extends Page implements Hasforms
                 DatePicker::make('dob'),
                 FileUpload::make('avatar')
                 ->avatar()
+            //    ->disk('upload')
+               ->directory('avatars')
+               ->preserveFilenames()
+               ->storeFileNamesIn('attachment_file_names')
+               ->uploadButtonPosition('left')
+               ->uploadProgressIndicatorPosition('left')
             ])
 
         ])

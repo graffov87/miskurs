@@ -1,5 +1,5 @@
 import { createApp } from 'vue/dist/vue.esm-bundler';
-import App from './App.vue';
+import App from './Posts.vue';
 const app = createApp(App);
 
 

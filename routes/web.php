@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +13,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::pattern('postUrl', '[a-z\-\d]+');
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/posts', [PostController::class, 'posts']);
+Route::get('/{postUrl}', [PostController::class, 'index']);

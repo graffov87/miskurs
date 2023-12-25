@@ -27,4 +27,19 @@ class EditPost extends EditRecord
     {
         return 'Post updated';
     }
+
+    protected function afterFill(): void
+    {
+        // Runs after the form fields are populated from the database.
+    }
+    
+    public function mount(int | string $record): void
+    {
+    parent::mount($record);
+    if (empty($this->getRecord()->url)) {
+       $this->form->fill([
+           'url' => strtolower(str_replace(" ","-",trim($this->getRecord()->title))),
+       ]);
+    }
+   }
 }

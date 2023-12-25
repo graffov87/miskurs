@@ -16,6 +16,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 
+
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
@@ -34,11 +35,22 @@ class PostResource extends Resource
                     Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
+                    RichEditor::make('short_content'),
                     RichEditor::make('content'),
                     Select::make('categories')
                     ->multiple()
                     ->relationship('categories','name')
-                    ->preload()
+                    ->preload(),
+                    Select::make('tags')
+                    ->multiple()
+                    ->relationship('tags','name')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                    ])
+                    ->preload(),
+                    Forms\Components\TextInput::make('url')
+                    ->maxLength(255),
                     ])->columns(1)
             ]);
     }

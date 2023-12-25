@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
     export default {
         props: ['data'],
         data() {
@@ -26,10 +27,9 @@
         async getData() {
                 const endpoint = "https://azbyka.ru/days/widgets/presentations.json?image=1";
                 const headers = {
-                    "content-type": "application/json",
+                    "content-type": "application/json"
                 };
-             
-
+    
                 const options = {
                     "method": "GET",
                     "headers": headers

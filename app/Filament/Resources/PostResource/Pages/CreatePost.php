@@ -19,4 +19,14 @@ class CreatePost extends CreateRecord
     {
         return 'Post created';
     }
+
+    public function mount(): void
+ {
+
+    if (empty($this->post->url)) {
+        $this->form->fill([
+            'url' => strtolower(str_replace(" ","-",trim($this->post->title))),
+        ]);
+     }
+}
 }

@@ -4,27 +4,17 @@
 
         <div class="px-6 py-8">
             <div class="flex justify-between container mx-auto">
-                <div class="w-full lg:w-7/12">
+                <div class="w-full">
                     <div class="flex items-center justify-between">
                         <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Статьи</h1>
+                        <post-filter></post-filter>
                     </div>
                     <div class="mt-6" v-for="post in posts" :key="post.id">
-                        <post :data="post" :size="1"></post>
+                        <post :data="post" :size="0"></post>
                     </div>
-                </div>
-                <div class="-mx-8 w-4/12 hidden lg:block">
-                    <div class="px-8">
-                        <h1 class="mb-4 text-xl font-bold text-gray-700">Календарь дня</h1>
-                        <calend></calend>
+                    <div class="mt-8">
+                        <Pagination></Pagination>
                     </div>
-                    <div class="mt-10 px-8">
-                        <h1 class="mb-4 text-xl font-bold text-gray-700">Категории</h1>
-                        <categories></categories>
-                    </div>
-                   <!-- <div class="mt-10 px-8">
-                        <h1 class="mb-4 text-xl font-bold text-gray-700">Последняя Статья</h1>
-                        <recent-post></recent-post>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -35,14 +25,10 @@
 
 <script>
 import Navbar from "./components/navigation-navbar-simple.vue";
+import SimpleFooter from "./components/navigation-footer-simple-with-icon.vue";
 import PostFilter from "./components/elements-select-option.vue";
 import Post from "./components/elements-blog-post-article-review.vue";
 import Pagination from "./components/elements-pagination.vue";
-import UsersList from "./components/sections-blog-users-list.vue";
-import Categories from "./components/sections-categories-list.vue";
-import RecentPost from "./components/sections-recent-article.vue";
-import SimpleFooter from "./components/navigation-footer-simple-with-icon.vue";
-import Calend from "./components/section-calendar.vue";
 import Request from './methods/request';
 
 export default {
@@ -52,21 +38,17 @@ export default {
         PostFilter,
         Post,
         Pagination,
-        UsersList,
-        Categories,
-        RecentPost,
-        SimpleFooter,
-        Calend
+        SimpleFooter
     },
     data() {
         return {
             imgUrl: window.Laravel.baseUrl + '/storage/',
-            posts: [],           
+            posts:[]  
         }
     },
     methods: {
         async getData() {
-                let req = new Request();
+            let req = new Request();
                 const graphqlQuery = {
                         "query": `{posts(orderBy: [{ column: CREATED_AT, order: DESC }]) {
                                 id
@@ -91,16 +73,13 @@ export default {
                                 }}`
                 };
                 let data = await req.getData(graphqlQuery);
-                let posts = data.data.posts.slice(0,5);
+                let posts = data.data.posts;
                 let newPosts = [];
-
                 posts.forEach(el => {
                     let postImg = window.Laravel.baseUrl + "/" + el.url;
-                    let date = new Date(el.created_at);
-                    let newDate = (date.getDate() > 9 ? '' : '0') + date.getDate() +"/" + ((date.getMonth() + 1) > 9 ? '' : '0') + (date.getMonth() + 1) +"/" + date.getFullYear() ;
                     newPosts.push({
                     id: el.id,
-                    date: newDate,
+                    date: el.created_at,
                     tag: el.categories[0].name,
                     tags: el.tags,
                     title: el.title,

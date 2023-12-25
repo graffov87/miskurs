@@ -31,7 +31,8 @@ class CategoryResource extends Resource
                 Section::make()->schema([
                     Forms\Components\TextInput::make('name')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(255),
+                    Forms\Components\TextInput::make('sort')
                     ])->columns(2)
             ]);
     }
