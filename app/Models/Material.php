@@ -9,6 +9,13 @@ class Material extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'name',
+        'url',
+        'filename'
+    ];
+
     public function posts() {
         return $this->belongstoMany(Post::class, 'post_materials','material_id','post_id');
     }

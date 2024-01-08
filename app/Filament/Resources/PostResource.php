@@ -15,6 +15,11 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Set;
+use Illuminate\Support\Str;
+use Filament\Forms\Get;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\FileUpload;
 
 
 class PostResource extends Resource
@@ -34,12 +39,56 @@ class PostResource extends Resource
                 Section::make()->schema([
                     Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->live()
+                    ->afterStateUpdated(function (Get $get, Set $set, ?string $old, ?string $state) {
+                        if (($get('slug') ?? '') !== Str::slug($old)) {
+                            return;
+                        }
+                    
+                        $set('slug', Str::slug($state));
+                    }),
                     RichEditor::make('short_content'),
                     RichEditor::make('content'),
                     Select::make('categories')
                     ->multiple()
                     ->relationship('categories','name')
+                    ->preload(),
+                    Select::make('materials')
+                    ->multiple()
+                    ->relationship('materials','name')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required(),
+                        Select::make('type')
+                            ->options([
+                                 '0' => 'file',
+                                 '1' => 'youtube'
+                            ])
+                            ->live()
+                            ->afterStateUpdated(fn (Select $component) => $component
+                            ->getContainer()
+                            ->getComponent('dynamicTypeFields')
+                            ->getChildComponentContainer()
+                            ->fill()),
+                        Section::make()
+                        ->schema(fn (Get $get): array => match ($get('type')) {
+                            '0' => [
+                                FileUpload::make('filename')
+                                ->preserveFilenames()
+                                ->storeFileNamesIn('attachment_file_names')
+                                ->uploadButtonPosition('left')
+                                ->uploadProgressIndicatorPosition('left')
+                            ],
+                           
+                            '1' => [
+                                Forms\Components\TextInput::make('url'),
+                        ],
+                            default => [
+                            ],
+                            })
+                            ->key('dynamicTypeFields')
+                        ])
                     ->preload(),
                     Select::make('tags')
                     ->multiple()

@@ -142,6 +142,8 @@ type Post {
 
     tags: [Tag]!
 
+    materials:[Material]!
+
     user: User!
 
 }
@@ -157,6 +159,24 @@ type Tag {
     "When the account was created."
     created_at: DateTime!
 
+    "When the account was last updated."
+    updated_at: DateTime!
+}
+
+type Material {
+   "Unique primary key."
+    id: ID!
+
+   type: Int!
+     "Non-unique name."
+    name: String!
+
+    filename: String!
+
+    url: String @field(resolver: "App\\GraphQL\\Queries\\Url")
+    "When the account was created."
+    created_at: DateTime!
+  
     "When the account was last updated."
     updated_at: DateTime!
 }

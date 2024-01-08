@@ -45,6 +45,11 @@ export default {
                                 categories {
                                     name
                                 }
+                                materials {
+                                    type
+                                    filename
+                                    url
+                                }
                                 user {
                                     profile {
                                         first_name
