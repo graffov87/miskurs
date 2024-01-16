@@ -9,7 +9,8 @@ export default defineConfig({
             "resources/css/app.css", 
             "resources/js/app.js",
             "resources/js/post.js",
-            "resources/js/posts.js"
+            "resources/js/posts.js",
+            "resources/js/material.js"
         ],
             refresh: true,
         }),

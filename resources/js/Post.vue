@@ -7,6 +7,12 @@
                     <h1 class="text-xl font-bold text-gray-700 md:text-2xl" v-text="post.title"></h1>
                 <div class="w-full" v-html="post.content">
                 </div>
+                <template v-if="post.materials.length">
+                <h3>Материалы для скачивания</h3>
+                <template v-for="link in post.materials">
+                    <a :href="link.url" v-html="link.name" download></a>
+                </template>
+                </template>
             </div>
         </div>
 
@@ -56,6 +62,12 @@ export default {
                                         last_name
                                         avatar
                                     }
+                                }
+                                materials {
+                                    type
+                                    name
+                                    filename
+                                    url
                                 }
                                 }}`
                 };

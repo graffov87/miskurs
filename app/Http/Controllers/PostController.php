@@ -9,11 +9,14 @@ class PostController extends Controller
 {
     public function index($postUrl) {
 
-        return view('posts.index');
+        $post = Post::where('url','=',$postUrl)->first();
+        $array = ['title' => $post['title'],'description' => $post['title']];
+        return view('posts.index', $array);
     }
 
     public function posts() {
-        return view('posts.posts');
+        $array = ['title' => "Cтатьи",'description' => "Cтатьи"];
+        return view('posts.posts', $array);
 
     }
 }

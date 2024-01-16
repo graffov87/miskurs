@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-
+use App\Http\Controllers\MaterialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,8 +14,11 @@ use App\Http\Controllers\PostController;
 |
 */
 Route::pattern('postUrl', '[a-z\-\d]+');
+
 Route::get('/', function () {
-    return view('welcome');
+    $array = ['title' => "Богословские образовательные курсы для мирян",'description' => "Богословские образовательные курсы для мирян"];
+    return view('welcome', $array);
 });
+Route::get('/material', [MaterialController::class, 'index']);
 Route::get('/posts', [PostController::class, 'posts']);
 Route::get('/{postUrl}', [PostController::class, 'index']);

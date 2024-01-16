@@ -1,8 +1,8 @@
 <template>
     <footer class="px-6 py-2 bg-gray-800 text-gray-100">
         <div class="flex flex-col justify-between items-center container mx-auto md:flex-row">
-            <a class="text-2xl font-bold" href="#">Brand</a>
-            <p class="mt-2 md:mt-0">All rights reserved 2024.</p>
+            <a class="text-2xl font-bold" href="#"></a>
+            <p class="mt-2 md:mt-0">Все права защщены 2024.</p>
           <!--  <div class="flex -mx-2 mt-4 mb-2 md:mt-0 md:mb-0">
                 <a href="#" class="mx-2 text-gray-100 hover:text-gray-400">
                     <svg class="h-4 w-4 fill-current" viewBox="0 0 512 512">

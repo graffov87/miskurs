@@ -88,12 +88,7 @@ export default {
                                         avatar
                                     }
                                 }
-                                materials {
-                                    type
-                                    name
-                                    filename
-                                    url
-                                }
+                                
                                 }}`
                 };
                 let data = await req.getData(graphqlQuery);

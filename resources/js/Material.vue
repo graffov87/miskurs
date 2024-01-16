@@ -6,11 +6,11 @@
             <div class="flex justify-between container mx-auto">
                 <div class="w-full">
                     <div class="flex items-center justify-between">
-                        <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Статьи</h1>
+                        <h1 class="text-xl font-bold text-gray-700 md:text-2xl">Материалы для скачивания</h1>
                         <post-filter :order="order" :click="change"></post-filter>
                     </div>
-                    <div class="mt-6" v-for="post in posts" :key="post.id">
-                        <post :data="post" :size="0"></post>
+                    <div class="mt-6" v-for="post in materials" :key="post.id">
+                        <material :data="post" :size="0"></material>
                     </div>
                     <div class="mt-8">
                         <Pagination :step="step" :counts="counts" :click="next"></Pagination>
@@ -27,7 +27,7 @@
 import Navbar from "./components/navigation-navbar-simple.vue";
 import SimpleFooter from "./components/navigation-footer-simple-with-icon.vue";
 import PostFilter from "./components/elements-select-option.vue";
-import Post from "./components/elements-blog-post-article-review.vue";
+import Material from "./components/element-material.vue";
 import Pagination from "./components/elements-pagination.vue";
 import Request from './methods/request';
 
@@ -36,14 +36,14 @@ export default {
     components: {
         Navbar,
         PostFilter,
-        Post,
+        Material,
         Pagination,
         SimpleFooter
     },
     data() {
         return {
             imgUrl: window.Laravel.baseUrl + '/storage/',
-            posts:[],
+            materials:[]  ,
             step:1,
             counts:0,
             size:10,
@@ -54,66 +54,36 @@ export default {
         async getData(size, page, order) {
             let req = new Request();
                 const graphqlQuery = {
-                        "query": `{posts_limit(orderBy: [{ column: CREATED_AT, order: `+order+` }],first:`+size+`,page:`+page+`) {
+                        "query": `{materials(orderBy: [{ column: CREATED_AT, order: `+order+` }],first:`+size+`,page:`+page+`) {
                             data {
                                 id
-                                title
-                                short_content
-                                created_at
+                                type
+                                name
+                                filename
                                 url
-                                categories {
-                                    name
-                                }
-                                tags {
-                                    id
-                                    name
-                                }
-                                user {
-                                    profile {
-                                        first_name
-                                        last_name
-                                        avatar
-                                    }
-                                }
-                                }
-                                paginatorInfo {
+                            }
+                            paginatorInfo {
                                 currentPage
                                 lastPage
                                 }
                                 }}`
                 };
                 let data = await req.getData(graphqlQuery);
-                let posts = data.data.posts_limit.data;
-                let newPosts = [];
-                posts.forEach(el => {
-                    let postImg = window.Laravel.baseUrl + "/" + el.url;
-                    newPosts.push({
-                    id: el.id,
-                    date: el.created_at,
-                    tag: el.categories[0].name,
-                    tags: el.tags,
-                    title: el.title,
-                    body: el.short_content,
-                    url: postImg,
-                    image: this.imgUrl + el.user.profile.avatar,
-                    userName: el.user.profile.first_name + ' ' + el.user.profile.last_name
-                    });
-                });
-
-                this.posts = newPosts;
+                this.materials = data.data.materials.data;
             },
-            async getCounts() {
+       async getCounts() {
         let req = new Request();
                 const graphqlQuery = {
-                        "query": `{postsCount}`
+                        "query": `{materialsCount}`
                 };
                 let data = await req.getData(graphqlQuery);
-        if (data.data.postsCount > this.size) {
-        this.counts = Math.ceil(data.data.postsCount/this.size);
+        if (data.data.materialsCount > this.size) {
+        this.counts = Math.ceil(data.data.materialsCount/this.size);
         } else {
             this.counts = 0;
         }
-        },
+
+       },
        next(step) {
         this.step = step;
         this.getData(this.size, this.step,this.order);
@@ -124,7 +94,7 @@ export default {
        }
     },
     mounted() {
-        this.getData(this.size, this.step, this.order);
+                this.getData(this.size, this.step, this.order);
                 this.getCounts();
         }
 }
