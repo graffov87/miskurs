@@ -15,8 +15,8 @@ class Page extends Model
         'url'
     ];
 
-    public function user()
+    public function getRouteKeyName()
     {
-        return $this->belongsTo(User::class);
+        return 'url';
     }
 }

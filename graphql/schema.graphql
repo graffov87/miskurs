@@ -35,6 +35,10 @@ type Query {
     materials: [Material]! @paginate
     materials(orderBy: _ @orderBy(columns: ["created_at"])): [Material!]! @paginate
     materialsCount: Int! @count(model: "Material")
+    page(
+       "Search by email url"
+       url: String! @eq
+    ): Page @find
   
 }
 
@@ -205,6 +209,26 @@ type Material {
     "When the account was created."
     created_at: DateTime!
   
+    "When the account was last updated."
+    updated_at: DateTime!
+}
+
+type Page {
+
+   "Unique primary key."
+    id: ID!
+
+    title: String!
+
+    status: Int!
+
+    content: String!
+    
+    url: String!
+
+    "When the account was created."
+    created_at: DateTime!
+
     "When the account was last updated."
     updated_at: DateTime!
 }

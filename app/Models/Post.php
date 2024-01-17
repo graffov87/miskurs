@@ -16,14 +16,16 @@ class Post extends Model
         'url'
     ];
 
-    public function categories() {
-        
-        return $this->belongstoMany(Category::class, 'post_categories','post_id','category_id');
+    public function categories()
+    {
+
+        return $this->belongstoMany(Category::class, 'post_categories', 'post_id', 'category_id');
     }
 
-    public function tags() {
-        
-        return $this->belongstoMany(Tag::class, 'post_tags','post_id','tag_id');
+    public function tags()
+    {
+
+        return $this->belongstoMany(Tag::class, 'post_tags', 'post_id', 'tag_id');
     }
 
     public function user()
@@ -31,17 +33,23 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function materials() {
-        
-        return $this->belongstoMany(Material::class, 'post_materials','post_id','material_id');
+    public function materials()
+    {
+
+        return $this->belongstoMany(Material::class, 'post_materials', 'post_id', 'material_id');
     }
 
-    protected static function boot(): void 
+    protected static function boot(): void
     {
         parent::boot();
         //
-        self::creating(function($post){
+        self::creating(function ($post) {
             $post->user_id = auth()->id();
         });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'url';
     }
 }

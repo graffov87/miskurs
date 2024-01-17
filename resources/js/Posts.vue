@@ -86,7 +86,7 @@ export default {
                 let posts = data.data.posts_limit.data;
                 let newPosts = [];
                 posts.forEach(el => {
-                    let postImg = window.Laravel.baseUrl + "/" + el.url;
+                    let postImg = window.Laravel.baseUrl + "/post/" + el.url;
                     newPosts.push({
                     id: el.id,
                     date: el.created_at,

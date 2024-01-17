@@ -41,6 +41,7 @@ export default {
         async getData() {
                 let req = new Request();
                 let url = window.location.pathname.replace("/","");
+                url = url.replace("post/","");
                 const graphqlQuery = {
                         "query": `{post(url:"`+url+`") {
                                 id
